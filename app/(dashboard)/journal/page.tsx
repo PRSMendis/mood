@@ -1,5 +1,5 @@
 import EntryCard from '@/components/EntryCard';
-import NewEntryCard from '@/components/newEntryCard';
+import NewEntryCard from '@/components/NewEntryCard';
 import { getUserByClerkID } from '@/utils/auth';
 import {prisma} from '@/utils/db'
 import Link from 'next/link';
