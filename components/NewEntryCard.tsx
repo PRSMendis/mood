@@ -12,9 +12,6 @@ const NewEntryCard = () => {
         // router push adds new url to stack, so that back button works
         router.push(`/journal/${data.id}`)
     }
-    const handleOnClick2 = () => {
-        console.log('clicked')
-    }
     return (
         <div
           className="cursor-pointer overflow-hidden rounded-lg bg-white shadow"
