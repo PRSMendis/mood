@@ -10,7 +10,8 @@ const parser = StructuredOutputParser.fromZodSchema(
         subject: z.string().describe('The subject of the journal entry.'),
         summary: z.string().describe('A summary of the journal entry.'),
         negative: z.boolean().describe('Whether the journal entry is negative.'),
-        color: z.string().describe('A hexadecimal color code representing the mood of the journal entry. Example being string "#FF0000" for red representing anger.'),
+        // color: z.string().describe('A hexadecimal color code representing the mood of the journal entry. Example being string "#FF0000" for red representing anger.'),
+        color: z.string().describe('a hexidecimal color code the represents the mood of the entry. Example #0101fe for blue representing happiness.'),
     })
 )
 
@@ -26,7 +27,6 @@ const getPrompt = async (content) => {
     const input = await prompt.format({
         entry: content,
     })
-    console.log('input: ', input);
     return input;
 }
 
@@ -36,6 +36,11 @@ export const analyse = async (content) => {
     // temperature describes how "creative" the AI is allowed to be. 0 is the least creative, 1 is the most creative.
     const model = new OpenAI({temperature: 0, modelName: 'gpt-3.5-turbo'});
     const result = await model.call(input);
-    console.log('result: ', result);
+
+    try {
+        return parser.parse(result);
+    } catch (error) {
+        console.error(error);
+    }
 
 }
