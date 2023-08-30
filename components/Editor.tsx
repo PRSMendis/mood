@@ -8,7 +8,7 @@ import { useAutosave } from "react-autosave"
 const Editor = ({entry}) => {
   const [text, setText] = useState(entry.content)
   const [isLoading, setIsLoading] = useState(false)
-
+  // by default has a 2000 ms debounce
   useAutosave({
     data: text,
     onSave: async (_text) => {
