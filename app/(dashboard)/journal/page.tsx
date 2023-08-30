@@ -1,5 +1,6 @@
 import EntryCard from '@/components/EntryCard';
 import NewEntryCard from '@/components/NewEntryCard';
+import { analyse } from '@/utils/ai';
 import { getUserByClerkID } from '@/utils/auth';
 import {prisma} from '@/utils/db'
 import Link from 'next/link';
@@ -15,6 +16,14 @@ const getEntries = async () => {
       createdAt: 'desc',
     },
   });
+
+  const result = await analyse(`I'm going to give you a journal entry, I want you to analyse for a few thigns. I need the mood,
+   a summary, what the subject is, and a colour representing the mood. You need to respond back with Formatted JSON like so:
+   {"mood": "", "subject": "", "summary": "", "colour": "", negative": ""}
+   
+   entry: 
+   Today was a really bad day. I was feeling really sad and I had a lot of work to do. I was feeling really stressed out and I
+   didn't know what to do. I was feeling really sad and I had a lot of work to do.`)
 
   return entries;
 }
