@@ -29,6 +29,7 @@ model JournalEntry {
   content   String    @db.Text
   analysis  Analysis?
 
+  // compound index, of both of these fields
   @@unique([userId, id])
 }
 
