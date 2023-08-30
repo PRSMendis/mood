@@ -17,8 +17,6 @@ const getEntries = async () => {
     },
   });
 
-  const result = await analyse(` Today was a really great day, I got some awesome new shoes, and I went to the park with my friends. I'm really happy!`)
-
   return entries;
 }
 
