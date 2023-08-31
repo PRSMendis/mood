@@ -8,8 +8,10 @@ import { useAutosave } from "react-autosave"
 const Editor = ({entry}) => {
   const [text, setText] = useState(entry.content)
   const [isLoading, setIsLoading] = useState(false)
+  console.log('entry.analysis: ', entry.analysis);
+  const [analysis, setAnalysis] = useState(entry.analysis)
 
-  const {mood, summary, color, subject, negative} = entry.analysis
+  const {mood, summary, color, subject, negative} = analysis
     const analysisData = [
         {name: 'Subject', value: subject},
         {name: 'Summary', value: summary},
@@ -22,6 +24,7 @@ const Editor = ({entry}) => {
     onSave: async (_text) => {
       setIsLoading(true)
       const updated = await updateEntry(entry.id, _text)
+      setAnalysis(updated.analysis)
       setIsLoading(false)
     },
   })
