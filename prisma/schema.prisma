@@ -18,6 +18,7 @@ model User {
   clerkId   String         @unique
   email     String         @unique
   entries   JournalEntry[]
+  Analysis  Analysis[]
 }
 
 model JournalEntry {
@@ -41,11 +42,15 @@ model Analysis {
   entryId String
   entry   JournalEntry @relation(fields: [entryId], references: [id], onDelete: Cascade) // onDelete: Cascade means that if the entry is deleted, the analysis is deleted too
 
-  mood     String  @db.Text
-  summary  String  @db.Text
-  color    String  @db.Text
-  negative Boolean
-  subject  String  @db.Text
+  userId         String
+  user           User    @relation(fields: [userId], references: [id])
+  mood           String  @db.Text
+  summary        String  @db.Text
+  color          String  @db.Text
+  negative       Boolean
+  subject        String  @db.Text
+  sentimentScore Float   @default(0)
 
   @@unique([entryId])
+  @@index([userId])
 }
