@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+      "composite": true, // required for project references
+      "module": "ESNext", 
+      "moduleResolution": "bundler", // how to resolve modules
+      "allowSyntheticDefaultImports": true // allow default imports from modules with no default export, for common JS - ECMA Script interop
+    },
+    "include": ["vite.config.ts"]
+  }
