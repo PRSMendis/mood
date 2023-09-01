@@ -1,44 +1,45 @@
 'use client'
 
-import { askQuestion } from "@/utils/api"
-import { useState } from "react"
+import { askQuestion } from '@/utils/api'
+import { useState } from 'react'
 
 const Question = () => {
+  const [question, setQuestion] = useState('')
+  const [answer, setAnswer] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
 
-    const [value, setValue] = useState('')
-    const [loading, setLoading] = useState(false)
-    const [response, setResponse] = useState()
+    const { data } = await askQuestion(question)
 
-    const handleSubmit = async (e)=> {
-        e.prevent.default()
-        setLoading(true)
-        console.log('setLoading(true): ', setLoading(true));
-        const answer = await askQuestion(value)
-        console.log('answer', await answer)
-        setResponse(answer)
-        setTimeout(() => {
-            
-        }, 2000);
-        setValue('')
-        setLoading(false)
-    }
-
-    const onChange = (e)=> {
-        e.preventDefault()
-        setValue(e.target.value)
-    }
-    return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input disabled={loading} onChange={onChange} value={value} type="text" placeholder="Ask a question"
-                className="border-black/20 px-4 py-2 text-lg" />
-                <button disabled={loading} type="submit" className="bg-blue-400 px-4 py-2 rounded-lg">Ask</button>
-            </form>
-            {loading && <div>...loading</div>}
-            <div>{response}</div>
-            {response && <div>{response}</div>}
-        </div>
-    )
+    setAnswer(data)
+    setLoading(false)
+    setQuestion('')
+  }
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          className="border border-gray-300 rounded-md p-2 text-lg"
+          disabled={loading}
+          placeholder="Ask a question..."
+        />
+        <button
+          disabled={loading}
+          type="submit"
+          className="bg-blue-400 px-4 py-2 rounded-md"
+        >
+          Ask
+        </button>
+      </form>
+      {loading && <p>Loading...</p>}
+      {answer && <p className="my-4 text-xl">{answer}</p>}
+    </div>
+  )
 }
 
 export default Question
