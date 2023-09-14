@@ -7,6 +7,8 @@ import { redirect } from "next/navigation";
 // it's imperative that the clerkId is attached to the user
 // so that we can use it to query the database
 // and we're not reliant on the clerk service
+// the alternative would be to use a webhook from clerk, 
+// but that would cause the user to be locked out until a response was receive from the webhook
 
 const createNewUser = async() => {
   const user = await currentUser()
