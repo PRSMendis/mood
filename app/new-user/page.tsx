@@ -2,6 +2,12 @@ import {prisma} from "@/utils/db"
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
+// the purpose of createNewYser is to create a new user in the database
+// if the user doesn't exist
+// it's imperative that the clerkId is attached to the user
+// so that we can use it to query the database
+// and we're not reliant on the clerk service
+
 const createNewUser = async() => {
   const user = await currentUser()
   const match = await prisma.user.findUnique({
