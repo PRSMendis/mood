@@ -28,6 +28,7 @@ export const createNewEntry = async () => {
 }
 
 export const askQuestion = async (question) => {
+  console.log('question: ', question);
     const res = await fetch(
       new Request(createURL(`/api/question`), {
         method: 'POST',
@@ -35,6 +36,7 @@ export const askQuestion = async (question) => {
       })
     )
   
+    console.log('res: ', res);
     if (res.ok) {
       return res.json()
     } else {

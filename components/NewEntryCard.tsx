@@ -6,9 +6,7 @@ import { useRouter } from "next/navigation"
 const NewEntryCard = () => {
     const router = useRouter()
     const handleOnClick = async () => {
-        console.log('clicked')
         const data = await createNewEntry()
-        console.log('data: ', data);
         // router push adds new url to stack, so that back button works
         router.push(`/journal/${data.id}`)
     }
