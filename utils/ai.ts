@@ -7,6 +7,11 @@ import {loadQARefineChain} from 'langchain/chains'
 import {OpenAIEmbeddings} from 'langchain/embeddings/openai'
 import {MemoryVectorStore} from 'langchain/vectorstores/memory'
 
+// OpenAI retired/legacy-ified the original gpt-3.5-turbo and ada-002 models;
+// keep model names in one place so they are easy to bump.
+const CHAT_MODEL = 'gpt-4o-mini'
+const EMBEDDING_MODEL = 'text-embedding-3-small'
+
 // describe a schema for the output of the AI
 const parser = StructuredOutputParser.fromZodSchema(
     z.object({
@@ -39,7 +44,7 @@ const getPrompt = async (content) => {
 export const analyse = async (content) => {
     const input = await getPrompt(content);
     // temperature describes how "creative" the AI is allowed to be. 0 is the least creative, 1 is the most creative.
-    const model = new OpenAI({temperature: 0, modelName: 'gpt-3.5-turbo'});
+    const model = new OpenAI({temperature: 0, modelName: CHAT_MODEL});
     const result = await model.call(input);
 
     try {
@@ -62,9 +67,9 @@ export const qa = async (question, entries) => {
         })
     )
     console.log('embedding')
-    const model = new OpenAI({ temperature: 0, modelName: 'gpt-3.5-turbo' })
+    const model = new OpenAI({ temperature: 0, modelName: CHAT_MODEL })
     const chain = loadQARefineChain(model)
-    const embeddings = new OpenAIEmbeddings()
+    const embeddings = new OpenAIEmbeddings({ modelName: EMBEDDING_MODEL })
     const store = await MemoryVectorStore.fromDocuments(docs, embeddings)
     const relevantDocs = await store.similaritySearch(question)
     const res = await chain.call({
